@@ -137,3 +137,25 @@ def remove_columns(df, cols_to_remove):
     """
     df = df.drop(columns=cols_to_remove)
     return df
+
+
+
+
+
+def split(df, stratify_by=None):
+    """
+    3 way split for train, validate, and test datasets
+    To stratify, send in a column name
+    """
+    
+    
+    train, test = train_test_split(df, test_size=.2, random_state=123, stratify=df[stratify_by])
+    
+    train, validate = train_test_split(train, test_size=.3, random_state=123, stratify=train[stratify_by])
+    
+    return train, validate, test
+
+
+
+
+
