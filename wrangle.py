@@ -14,20 +14,23 @@ from bs4 import BeautifulSoup
 from time import sleep
 import os
 
-def get_githubpgs():
-    """
-    This function will create a list of all the url pages in the google repos section
-    """
-    urls = []
-    for i in range(1,68):
-        
-        url = f'https://github.com/google?page={i}'
-        urls.append(url)
-    return urls
+import unicodedata
+import re
 
+import warnings
+warnings.filterwarnings("ignore")
 
+import nltk
+from nltk.tokenize.toktok import ToktokTokenizer
+from nltk.corpus import stopwords
 
-
+'''
+*------------------*
+|                  |
+|     ACQUIRE      |
+|                  |
+*------------------*
+'''
 
 def get_githubpgs():
     """
@@ -52,7 +55,7 @@ def get_repo_links():
     repos = []
     for i in range(0,29):
         link_suffix = soup.find_all('a', itemprop='name codeRepository')[i].get('href')
-        link  = f'https://github.com/{link_suffix}'
+        link  = f'https://github.com{link_suffix}'
         repos.append(link)
     return repos
 
@@ -97,3 +100,40 @@ def get_all_repo_links():
     
     return repo_links
 
+'''
+*------------------*
+|                  |
+|     PREPARE      |
+|                  |
+*------------------*
+'''
+
+
+def clean(text, extra_words = ['r', 'u', '2', 'ltgt', "'"]):
+    """
+    A simple function to cleanup text data:
+    takes in a string of text,
+    pulls in `nltk`s stopwords and appends any additional `extra_words`
+    returns a string filtered for stopwords & lemmatized    
+    """
+    wnl = nltk.stem.WordNetLemmatizer()
+    stopwords = nltk.corpus.stopwords.words('english') + extra_words
+    text = (unicodedata.normalize('NFKD', text)
+             .encode('ascii', 'ignore')
+             .decode('utf-8', 'ignore')
+             .lower())
+    words = re.sub(r'[^\w\s]', '', text).split()
+    return [wnl.lemmatize(word) for word in words if word not in stopwords]
+
+
+
+
+
+def remove_columns(df, cols_to_remove):  
+    """
+    This function removes columns listed in arguement
+    - cols_to_remove = ["col1", "col2", "col3", ...]
+    returns DF w/o the columns.
+    """
+    df = df.drop(columns=cols_to_remove)
+    return df
