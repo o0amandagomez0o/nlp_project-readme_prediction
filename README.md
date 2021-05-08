@@ -54,7 +54,16 @@ I'd like to use takeaways from my exploration to create another useful feature.
 <a name="key-findings"></a><h1><img src=""/></h1>
 
 ## Exploration Key Findings:
-### Univariate
+- `C++` is the primary language of the most of amount of repos.
+    - Followed by:
+        - Python & Java
+        - Javascript
+        - TypeScript, Kotlin & Go
+- `Starlark`, `Jupyter Notebook`, `C`, `Shell`, `Rust` & `HTML`all have the least amount of repositories written in their language: 67.
+
+- Mean word count of Google Repos is 6589.
+- Median is 3760
+- Min: 274, Max: 48063
 
 
 

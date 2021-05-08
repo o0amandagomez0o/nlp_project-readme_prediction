@@ -142,6 +142,44 @@ def remove_columns(df, cols_to_remove):
 
 
 
+def get_length(column):
+    """
+    This function reads the length of each readme and
+    appends it to a list.
+    """
+    
+    length = []
+    for i in range(0,1943):
+        text_len = len(df.column[i])
+        length.append(text_len)
+    
+    return length
+
+
+
+
+
+
+def df_features():
+    """
+    This function creates new features as columns:
+    - readme_length: word count of readme's
+    - clean_content: cleaned readme content
+    - cleaned_length: word count of cleaned readme's
+    """
+    
+    df['readme_length'] = get_length("readme_contents")
+    
+    df['clean_content'] = df.readme_contents.apply(w.clean)
+    
+    df['cleaned_length'] = get_length("clean_content")
+    
+    
+
+
+
+
+
 def split(df, stratify_by=None):
     """
     3 way split for train, validate, and test datasets
