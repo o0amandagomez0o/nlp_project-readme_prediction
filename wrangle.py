@@ -24,6 +24,8 @@ import nltk
 from nltk.tokenize.toktok import ToktokTokenizer
 from nltk.corpus import stopwords
 
+from sklearn.model_selection import train_test_split
+
 '''
 *------------------*
 |                  |
@@ -123,7 +125,7 @@ def clean(text, extra_words = ['r', 'u', '2', 'ltgt', "'"]):
              .decode('utf-8', 'ignore')
              .lower())
     words = re.sub(r'[^\w\s]', '', text).split()
-    return [wnl.lemmatize(word) for word in words if word not in stopwords]
+    return " ".join([wnl.lemmatize(word) for word in words if word not in stopwords])
 
 
 
@@ -193,6 +195,40 @@ def split(df, stratify_by=None):
     
     return train, validate, test
 
+
+
+
+def split(df, target, feature, seed):
+    '''
+    split_df will take one argument(df) and 
+    then split our data into 20/80, 
+    then split the 80% into 30/70
+    
+    performs a train, validate, test split
+    
+    splits each of the 3 samples into a dataframe with independent variables
+    and a series with the dependent, or target variable. 
+    
+    The function returns 6 dataframes and 3 series:
+    train, validate, test split, X_train (df) & y_train (series), X_validate & y_validate, X_test & y_test. 
+    '''
+    # Train, Validate, and test
+    train_and_validate, test = train_test_split(df, test_size=0.2, random_state=seed)
+    train, validate = train_test_split(train_and_validate, test_size=0.3, random_state=seed)
+    
+    # Split with X and y
+    
+    # Setup our X variables
+    X_train = train[feature]
+    X_validate = validate[feature]
+    X_test = test[feature]
+    
+    # Setup our y variables
+    y_train = train[target]
+    y_validate = validate[target]
+    y_test = test[target]
+        
+    return train, validate, test, X_train, y_train, X_validate, y_validate, X_test, y_test 
 
 
 
