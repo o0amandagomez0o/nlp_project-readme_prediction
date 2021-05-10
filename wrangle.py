@@ -102,6 +102,22 @@ def get_all_repo_links():
     
     return repo_links
 
+
+
+
+
+
+def get_readmes():
+    """
+    get_aac will :
+    - read in google_readmes1020.csv
+    return: pandas dtatframe with original index col dropped
+    """
+    
+    df = pd.read_csv('google_readmes1020.csv').drop(columns="Unnamed: 0")
+    
+    return df
+
 '''
 *------------------*
 |                  |

@@ -33,3 +33,20 @@ def get_metrics(mod, X, y):
     ''')
     return prfs
 
+
+
+
+
+def language_predictor(text):
+    """
+    This function takes in text from a readme
+    - cleans the text
+    - creates a Series to hold the text
+    - scales the text
+    returns the predicted language of the Github repo
+    """
+    readmetext = w.clean(text, extra_words = ['r', 'u', '2', 'ltgt', "'"])
+
+    readme_series = pd.Series([readmetext])
+    readme_series = tfidf.transform(readme_series)
+    print(knn.predict(readme_series))
