@@ -144,15 +144,15 @@ def remove_columns(df, cols_to_remove):
 
 
 
-def get_length(column):
+def get_length(df, column):
     """
     This function reads the length of each readme and
     appends it to a list.
     """
     
     length = []
-    for i in range(0,1943):
-        text_len = len(df.column[i])
+    for c in df[column]:
+        text_len = len(c)
         length.append(text_len)
     
     return length
@@ -162,43 +162,47 @@ def get_length(column):
 
 
 
-def df_features():
+def df_features(df):
     """
     This function creates new features as columns:
     - readme_length: word count of readme's
     - clean_content: cleaned readme content
     - cleaned_length: word count of cleaned readme's
     """
+
+    df.dropna(inplace=True)
     
-    df['readme_length'] = get_length("readme_contents")
+    df['readme_length'] = get_length(df, "readme_contents")
     
-    df['clean_content'] = df.readme_contents.apply(w.clean)
+    df['clean_content'] = df.readme_contents.apply(clean)
     
-    df['cleaned_length'] = get_length("clean_content")
+    df['cleaned_length'] = get_length(df, "clean_content")
+    
+    return df
     
     
 
 
 
 
-
-def split(df, stratify_by=None):
+def tvt_split(df, stratify_by=None):
     """
     3 way split for train, validate, and test datasets
     To stratify, send in a column name
     """
     
     
-    train, test = train_test_split(df, test_size=.2, random_state=123, stratify=df[stratify_by])
+    train, test = train_test_split(df, test_size=.2, random_state=7890, stratify=df[stratify_by])
     
-    train, validate = train_test_split(train, test_size=.3, random_state=123, stratify=train[stratify_by])
+    train, validate = train_test_split(train, test_size=.3, random_state=7890, stratify=train[stratify_by])
     
     return train, validate, test
 
 
 
 
-def split(df, target, feature, seed):
+
+def split_Xy(df, target, feature):
     '''
     split_df will take one argument(df) and 
     then split our data into 20/80, 
@@ -212,9 +216,9 @@ def split(df, target, feature, seed):
     The function returns 6 dataframes and 3 series:
     train, validate, test split, X_train (df) & y_train (series), X_validate & y_validate, X_test & y_test. 
     '''
-    # Train, Validate, and test
-    train_and_validate, test = train_test_split(df, test_size=0.2, random_state=seed)
-    train, validate = train_test_split(train_and_validate, test_size=0.3, random_state=seed)
+    #split into train/validate/test
+    train, validate, test = tvt_split(df, target)
+    
     
     # Split with X and y
     
