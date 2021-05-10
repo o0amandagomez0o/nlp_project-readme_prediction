@@ -13,6 +13,8 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_recall_fscore_support
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 def get_metrics(mod, X, y):
     """
     This function takes in:
@@ -45,6 +47,7 @@ def language_predictor(text):
     - scales the text
     returns the predicted language of the Github repo
     """
+    tfidf = TfidfVectorizer()
     readmetext = w.clean(text, extra_words = ['r', 'u', '2', 'ltgt', "'"])
 
     readme_series = pd.Series([readmetext])
