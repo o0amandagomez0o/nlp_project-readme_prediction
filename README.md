@@ -12,16 +12,16 @@ ___
 [[Repo Replication](#repo-replication)]
 
 ___
-<a name="project-summary"></a><h1><img src=""/></h1>
+<a name="project-summary"></a><h1><img src="https://i.pinimg.com/originals/ae/b4/8f/aeb48f8665be081c8b679ae4314e7baf.png"></h1>
 
 
 
-Using Pandas, Mathplotlib, and SciKit-Learn in Jupyter Lab, I prepped and explored strings of text scraped from Google's Github Repositories to create a model that predicted the primary coding language used in that repository.
-# <span style="color:red">add final prediction results</span>
+Using Pandas, Mathplotlib, and SciKit-Learn in Jupyter Lab, I prepped and explored strings of text scraped from Google's Github Repositories to create a model that predicted the primary coding language used in that repository. This predictive model out performed the baseline model by 28%.
 
 
 
-<a name="project-planning"></a><h1><img src=""/></h1>
+
+<a name="project-planning"></a><h1><img src="https://i.pinimg.com/originals/53/55/a5/5355a5558620d09f795dc54d0a267eae.png"></h1>
 ### Goal: 
 The goal for this project is to create a model that will accurately predict the primary coding language of a Github Repository given text from a `README`.
 
@@ -51,92 +51,89 @@ I'd like to use takeaways from my exploration to create another useful feature.
     
 [Jump to Navigation](#navigation)
 
-<a name="key-findings"></a><h1><img src=""/></h1>
+<a name="key-findings"></a><h1><img src="https://i.pinimg.com/originals/87/b7/5b/87b75b1da8b762d85d5137f7412f9bc4.png"/></h1>
 
 ## Exploration Key Findings:
-- `C++` is the primary language of the most of amount of repos.
+- `Python` is the primary language of the most of amount of repos.
     - Followed by:
-        - Python & Java
-        - Javascript
-        - TypeScript, Kotlin & Go
-- `Starlark`, `Jupyter Notebook`, `C`, `Shell`, `Rust` & `HTML`all have the least amount of repositories written in their language: 67.
+        - `C++`
+        - `Go`
+        - `Java`
+        - `Javascript`
+        
+- Mean word count of Google Repos is 4920.
+- Median is 2955
+- Min: 10, Max: 142,109
 
-- Mean word count of Google Repos is 6589.
-- Median is 3760
-- Min: 274, Max: 48063
-
-
+- Long README's language varied
+- There are a **lot** of languages to choose from in the Google repos, filtering that down will be essential.
 
 
     
 [Jump to Navigation](#navigation)
 
-<a name="take-aways"></a><h1><img src=""/></h1>
+<a name="take-aways"></a><h1><img src="https://i.pinimg.com/originals/51/f4/89/51f489143dcbaee101c4ea0ed25238c6.png"/></h1>
 
-- 
-- 
+- Google uses over 30 different languages in their repos, which drove down the accuracy. 
 
+- The top common words used across the languages were verbs.
+
+![languagewordclouds](https://i.pinimg.com/originals/df/43/84/df4384afbfa3a415c47abecb7ba1b6bf.png)
 
 
 [Jump to Navigation](#navigation)
 
-<a name="data-dictionary"></a><h1><img src=""/></h1>
+<a name="data-dictionary"></a><h1><img src="https://i.pinimg.com/originals/a0/0a/4a/a00a4acc51f1e0f3007df0011b836917.png"/></h1>
 
 | column_name     | description                                                           | key                          | dtype  |
 |-----------------|-----------------------------------------------------------------------|------------------------------|--------|
 | `repo`          | Link suffix in `username`/`repo_name` formatting.                     |                              | object |
 | `language`      | Primary coding language used in the repo.                             |                              | object |
-| `readme_contents`| String of test scraped from repo's README file.                      |                              | object |
-| ``           |                                  |                              |   |
-
+| `readme_contents`| String of text scraped from repo's README file.                      |                              | object |
+| `readme_length`  | Length of `README` text                                              |                              | int64  |
+| `clean_content`  | String of `README` text that has been cleaned by `clean()` function  |                              | object |
+| `cleaned_length` | Length of `clean_content` text                                       |                              | int64  |
 
 
 
 
 [Jump to Navigation](#navigation)
 
-<a name="repo-replication"></a><h1><img src=""/></h1>
+<a name="repo-replication"></a><h1><img src="https://i.pinimg.com/originals/22/c7/0a/22c70a2c5b466c225205d379180115dd.png"/></h1>
 
 In order to get started reproducing this project, you'll need to setup a proper environment.
 
-1. Begin by downloading the weather data [here](https://www.kaggle.com/berkeleyearth/climate-change-earth-surface-temperature-data).
-![aacbanner](https://i.pinimg.com/originals/de/1b/51/de1b51677d5511963d8db44b964c6fbe.png)    
+1. Begin by downloading the [pre-scraped repo data: `google_readmes1020.csv`](google_readmes1020.csv) located in this [repository](https://github.com/o0amandagomez0o/nlp_project-readme_prediction).
+   
 
-
-
-
-
-
-
-2. Recover your downloaded zip file and unzip.
 
 **Prep your repo.**
 
-3. Create a new repo to house this project, and clone it into your terminal by copying the SSH link:
-    ![prep your repo]()
+2. Create a new repo to house this project, and clone it into your terminal by copying the SSH link:
+    ![prep your repo](https://i.pinimg.com/originals/93/d2/89/93d2890b4712500dbea92ebf9756e71a.png)
 > <code>git clone </code> (Cmd+V)
     
 
-4. Create a `.gitignore` that includes any files you dont want shared on the internet and **push it**! 
+3. Create a `.gitignore` that includes any files you dont want shared on the internet and **push it**! 
     
     - (This can include your newly downloaded .csv files)
 > <code>code .gitignore</code>
 
 
 
-5. Create a `README.md` file to begin notating steps taken so far.
+4. Create a `README.md` file to begin notating steps taken so far.
     
 ><code>code README.md</code>
 
 
-6. Transfer your unzipped .csv files into your newly established folder.
+5. Transfer your .csv file(s) into your newly established folder.
 
 
-7. Create a Jupyter Lab environment to continue working in.
+6. Create a Jupyter Lab environment to continue working in.
 > <code>jupyter lab</code>
 
 
-8. Create Jupyter Notebook to begin the data pipeline. 
+7. Create Jupyter Notebook to begin the data pipeline. 
 
 ![jlablauncher](https://i.pinimg.com/originals/98/92/c5/9892c5042934750b5ba073f2d49f6184.png)
     
